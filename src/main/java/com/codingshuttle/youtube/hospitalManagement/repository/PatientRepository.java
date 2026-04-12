@@ -49,4 +49,7 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     @Query(value = "select * from patient", nativeQuery = true)
     Page<Patient> findAllPatients(Pageable pageable);
 
+//    @Query("SELECT p FROM Patient p LEFT JOIN FETCH p.appointments a LEFT JOIN FETCH a.doctor")   // STILL A DOUBT, DON'T KNOW WHY SO MANY QUERIES IN THE OUTPUT INSTEAD OF A SINGLE QUERY AS IN THE QUERY IN THE NEXT LINE
+    @Query("SELECT p FROM Patient p LEFT JOIN FETCH p.appointments")    // fetch = FetchType.LAZY in the appointment repository
+    List<Patient> findAllPatientWithAppointment();
 }
